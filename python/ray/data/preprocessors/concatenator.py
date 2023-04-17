@@ -159,6 +159,7 @@ class Concatenator(Preprocessor):
         ]
         concatenated = df[ordered_columns_to_concat].to_numpy(dtype=self.dtype)
         df = df.drop(columns=columns_to_concat)
+        # df = df.drop(columns=columns_to_concat, errors="raise" if self.raise_if_missing else "ignore")
         # Use a Pandas Series for column assignment to get more consistent
         # behavior across Pandas versions.
         df.loc[:, self.output_column_name] = pd.Series(list(concatenated))

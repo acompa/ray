@@ -46,6 +46,9 @@ class TestConcatenator:
         new_ds = prep.transform(ds)
         for _, row in enumerate(new_ds.take()):
             assert set(row) == {"concat_out", "c"}
+        
+        with pytest.raises(KeyError, match="include"):
+            _ = Concatenator(include=["a", "b", "d"]).transform(ds)
 
     def test_exclude_overrides_include(self):
         df = pd.DataFrame({"a": [1, 2, 3, 4], "b": [2, 3, 4, 5], "c": [3, 4, 5, 6]})
